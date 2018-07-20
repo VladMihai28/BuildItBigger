@@ -48,6 +48,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
-    implementation project(':javaJokes')
+//    implementation project(':javaJokes')
     implementation project(path: ':jokepresenter')
 }
