@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -19,6 +20,8 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import java.io.IOException;
 
 import jokes.gradle.udacity.com.jokepresenter.JokePresenterActivity;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -102,10 +105,18 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            callback.jokeRetrieved(result);
-            Intent intent = new Intent(context, JokePresenterActivity.class);
-            intent.putExtra(context.getString(R.string.joke_key), result);
-            context.startActivity(intent);
+            if (result == null){
+                Toast toast = Toast.makeText(context, "Could not retrieve joke", LENGTH_SHORT);
+                toast.show();
+            }
+            else {
+                if (callback != null) {
+                    callback.jokeRetrieved(result);
+                }
+                Intent intent = new Intent(context, JokePresenterActivity.class);
+                intent.putExtra(context.getString(R.string.joke_key), result);
+                context.startActivity(intent);
+            }
         }
 
     }
